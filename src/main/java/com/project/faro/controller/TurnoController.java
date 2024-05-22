@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,4 +62,11 @@ public class TurnoController {
 	  public BalanceDto getBalanceTurnoDto() throws Exception {
 		return turnoService.getBalanceTurnoDto();
 		}
+	  
+	  
+		//Obtengo los turnos finalizados (para el balance)
+		  @RequestMapping(value = "/balance/{days}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE }) 
+		  public BalanceDto getBalanceForDayTurnoDto(@PathVariable int days) throws Exception {
+			return turnoService.getBalanceForDayTurnoDto(days);
+			}
 }

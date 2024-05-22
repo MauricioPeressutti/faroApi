@@ -14,6 +14,8 @@ public interface TurnoService {
 	BalanceDto getBalanceTurnoDto() throws Exception;
 
 	TurnoDto updateTurno(TurnoDto turnoDto, Integer userCloseId) throws Exception;
+
+	BalanceDto getBalanceForDayTurnoDto(int cantOfDays) throws Exception;
 	
 
 }

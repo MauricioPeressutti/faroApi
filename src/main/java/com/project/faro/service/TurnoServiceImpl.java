@@ -81,7 +81,7 @@ public class TurnoServiceImpl implements TurnoService {
 				turno.setStatus(turnoDto.getStatus());
 			}
 			if(turnoDto.getCantHoras() != null) {
-				 // Obtener la fecha de finalización actual
+				/* // Obtener la fecha de finalización actual
 			    Date fechaActualizada = turnoDto.getDateFinish();
 
 			    // Crear un objeto Calendar y establecer la fecha de finalización actual
@@ -92,8 +92,8 @@ public class TurnoServiceImpl implements TurnoService {
 			    calendar.add(Calendar.HOUR_OF_DAY, turnoDto.getCantHoras());
 
 			    // Obtener la fecha actualizada
-			    fechaActualizada = calendar.getTime();
-
+			    fechaActualizada = calendar.getTime();*/
+				Date fechaActualizada = new Date();
 			    // Establecer la fecha de finalización actualizada en el turno
 			    turno.setDateFinish(fechaActualizada);
 			}
@@ -123,5 +123,16 @@ public class TurnoServiceImpl implements TurnoService {
 	public BalanceDto getBalanceTurnoDto() throws Exception {
 		List<TurnoDto> list = new ArrayList<>();
 		return balanceConverter.toDto(turnoRepository.findTurnoByStatus(ConstantConfig.TURNO_STATUS_BAJ));
+	}
+
+	@Override
+	public BalanceDto getBalanceForDayTurnoDto(int cantOfDays) throws Exception {
+		Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+        calendar.add(Calendar.HOUR_OF_DAY, -cantOfDays);
+        Date last24Hours = calendar.getTime();
+
+        List<Turno> turnos = turnoRepository.findTurnoByStatusAndDateInitAfter(ConstantConfig.TURNO_STATUS_BAJ, last24Hours);
+        return balanceConverter.toDto(turnos);
 	}
 }

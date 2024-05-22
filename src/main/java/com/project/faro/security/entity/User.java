@@ -18,63 +18,30 @@ import java.io.Serializable;
 public class User implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonProperty("id")
-	private Integer id;
-	@JsonProperty("username")
-	private String username;
-	@JsonProperty("password")
-	private String password;
-	@Column(columnDefinition = "not null default false")
-	@JsonProperty("isOwner")
-	private Boolean isOwner;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @JsonProperty("id")
+    private Integer id;
 
-	// bi-directional many-to-one association to Person
-	@ManyToOne
-	@JoinColumn(name = "person_id")
-	@JsonProperty("person")
-	private Person person;
-	@JsonProperty("defaultPass")
-	private boolean defaultPass;
+    @Column(name = "username")
+    @JsonProperty("username")
+    private String username;
 
-	public Integer getId() {
-		return id;
-	}
+    @Column(name = "password")
+    @JsonProperty("password")
+    private String password;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column(name = "is_owner", columnDefinition = "bit default false") // Ajusta la definición de columna
+    @JsonProperty("isOwner")
+    private Boolean isOwner;
 
-	public String getUsername() {
-		return username;
-	}
+    // bi-directional many-to-one association to Person
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    @JsonProperty("person")
+    private Person person;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Person getPerson() {
-		return person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-
-	
-	public boolean isDefaultPass() {
-		return defaultPass;
-	}
-
-	public void setDefaultPass(boolean defaultPass) {
-		this.defaultPass = defaultPass;
-	}
+    @Column(name = "default_pass", columnDefinition = "bit default false") // Ajusta la definición de columna
+    @JsonProperty("defaultPass")
+    private boolean defaultPass;
 }

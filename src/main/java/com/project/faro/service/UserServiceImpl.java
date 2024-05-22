@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto create(UserDto newUser) throws Exception {
+		UserDto dto = new UserDto();
 		if (newUser == null && newUser.getDocNumber() == null) {
 			throw new Exception("Faltan datos para crear el usuario.");
 		}
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
 																								// default es 1234
 		}
 		user = userRepository.save(user);
-
-		return null;
+		dto.setUsername(user.getUsername());
+		return dto;
 	}
 }
